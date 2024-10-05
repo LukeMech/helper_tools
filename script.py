@@ -3,7 +3,7 @@ import sys
 import subprocess
 import urllib.request
 
-def process_file(url, audio_bit, vid_quality, output_name):
+def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
     req = urllib.request.Request(url, headers=headers)
     input_file =  f"{output_name}.in"
@@ -43,10 +43,18 @@ def process_file(url, audio_bit, vid_quality, output_name):
 
     # Wykonaj konwersję wideo za pomocą ffmpeg
     print(f"Processing {input_file}...", flush=True)
-    subprocess.run(['ffmpeg', '-i', input_file, '-c:v', 'libx264', 
-                '-preset', 'veryslow', '-crf', vid_quality, 
-                '-c:a', 'aac', '-b:a', audio_bit, 
-                output_file])
+    
+    # Podstawowa komenda ffmpeg
+    ffmpeg_command = ['ffmpeg', '-i', input_file, '-c:v', 'libx264', 
+                      '-preset', 'veryslow', '-crf', vid_quality, 
+                      '-c:a', 'aac', '-b:a', audio_bit]
+
+    # Warunek dodający flagę VFR
+    if vfr_enabled:
+        ffmpeg_command.extend(['-vsync', 'vfr'])
+
+    # Dodaj output file na końcu
+    ffmpeg_command.append(output_file)
     
     print(f"Processed file saved as: {output_file}", flush=True)
     return output_file  # Zwróć ścieżkę do pliku wyjściowego
@@ -57,6 +65,7 @@ if __name__ == "__main__":
     a_bit = sys.argv[2]  # Bitrate audio podany przez użytkownika
     vid_q = sys.argv[3]  # Jakość wideo podana przez użytkownika
     out_n = sys.argv[4]  # Nazwa pliku wyjściowego
+    vfr_e = sys.argv[5]  # Włączenie vfr
 
     # Uruchom przetwarzanie pliku
-    process_file(d_url, a_bit, vid_q, out_n)
+    process_file(d_url, a_bit, vid_q, out_n, vfr_e)

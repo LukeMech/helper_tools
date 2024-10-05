@@ -18,6 +18,11 @@ on:
         description: 'Jakość wideo ~15-~30'
         required: true
         default: '27'
+      vfr_enabled:
+        description: 'Włącz VFR (Variable Frame Rate) (Użyj w pliku wmv)'
+        required: true
+        default: false
+        type: boolean
 
 run-name: ${{ github.event.inputs.output_filename }} | Audio - ${{ github.event.inputs.a_bitrate }}, Video - ${{ github.event.inputs.vid_quality }}
 
