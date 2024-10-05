@@ -53,8 +53,9 @@ def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled):
     if vfr_enabled:
         ffmpeg_command.extend(['-vsync', 'vfr'])
 
-    # Dodaj output file na końcu
+    # Dodaj output file na końcu i uruchom
     ffmpeg_command.append(output_file)
+    subprocess.run(ffmpeg_command)
     
     print(f"Processed file saved as: {output_file}", flush=True)
     return output_file  # Zwróć ścieżkę do pliku wyjściowego
