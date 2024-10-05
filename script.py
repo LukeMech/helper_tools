@@ -30,8 +30,8 @@ def process_file(url, audio_bit, vid_quality, output_name):
                 # Oblicz aktualny procent pobranego pliku
                 percent_downloaded = bytes_downloaded / total_size * 100
 
-                # Wyświetl postęp tylko co 5% lub po pobraniu co najmniej 3 MB
-                if int(percent_downloaded) >= last_percent_reported + 5 or bytes_downloaded - (last_percent_reported / 100 * total_size) >= 3 * 1024 * 1024:
+                # Wyświetl postęp tylko co 0.5%
+                if int(percent_downloaded) >= last_percent_reported + 0.5:
                     last_percent_reported = int(percent_downloaded)
                     print(f"Pobrano: {bytes_downloaded} / {total_size} bajtów ({percent_downloaded:.2f}%)", flush=True)
                     
