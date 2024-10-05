@@ -66,7 +66,9 @@ if __name__ == "__main__":
     a_bit = sys.argv[2]  # Bitrate audio podany przez użytkownika
     vid_q = sys.argv[3]  # Jakość wideo podana przez użytkownika
     out_n = sys.argv[4]  # Nazwa pliku wyjściowego
-    vfr_e = sys.argv[5]  # Włączenie vfr
-
+    vfr_e = sys.argv[5].lower() == 'true' # Włączenie vfr
+    
+    print(vfr_e, flush=True)
+    
     # Uruchom przetwarzanie pliku
     process_file(d_url, a_bit, vid_q, out_n, vfr_e)
