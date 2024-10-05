@@ -1,0 +1,44 @@
+name: Recode
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'URL do pliku wideo'
+        required: true
+      output_filename:
+        description: 'Nazwa pliku zip wyjścia'
+        required: true
+        default: 'out'
+      a_bitrate:
+        description: 'Bitrate audio 64/96/128/160/192k'
+        required: true
+        default: '128k'
+      vid_quality:
+        description: 'Jakość wideo ~15-~30'
+        required: true
+        default: '27'
+
+run-name: ${{ github.event.inputs.output_filename }} | Audio - ${{ github.event.inputs.a_bitrate }}, Video - ${{ github.event.inputs.vid_quality }}
+
+jobs:
+  recode:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install ffmpeg
+      run: |
+        brew update
+        brew install ffmpeg
+    
+    - name: Run video processing script
+      run: |
+        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}"
+
+    - name: Upload processed video
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.inputs.output_filename }}
+        path: out/*
