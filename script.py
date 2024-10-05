@@ -43,7 +43,7 @@ def process_file(url, audio_bit, vid_quality, output_name):
 
     # Wykonaj konwersję wideo za pomocą ffmpeg
     print(f"Processing {input_file}...", flush=True)
-    subprocess.run(['ffmpeg', '-i', input_file, '-c:v', 'libx264', 
+    subprocess.run(['ffmpeg', '-i', input_file, '-c:v', 'libx265', 
                 '-preset', 'veryslow', '-crf', vid_quality, 
                 '-c:a', 'aac', '-b:a', audio_bit, 
                 output_file])
