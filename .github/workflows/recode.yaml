@@ -26,10 +26,10 @@ on:
 
 
 run-name: >-
-  ${{ github.event.inputs.vfr_enabled == "true"
-    && format('{0} | Audio - {1}, Video - {2}, VFR",
+  ${{ github.event.inputs.vfr_enabled
+    && format('{0} | Audio - {1}, Video - {2}, VFR',
               inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)              
-    || format('{0} | Audio - {1}, Video - {2}",
+    || format('{0} | Audio - {1}, Video - {2}',
               inputs.output_filename, inputs.a_bitrate, inputs.vid_quality) }}
    
 jobs:
