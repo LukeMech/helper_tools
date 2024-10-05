@@ -19,7 +19,7 @@ on:
         required: true
         default: '27'
       vfr_enabled:
-        description: 'Włącz VFR (Variable Frame Rate) (Użyj w pliku wmv)'
+        description: 'Włącz VFR (dla .wmv)'
         required: true
         default: false
         type: boolean
