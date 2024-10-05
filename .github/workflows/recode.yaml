@@ -47,7 +47,7 @@ jobs:
     
     - name: Run video processing script
       run: |
-        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}" ${{ github.event.inputs.vfr_enabled }}
+        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}" "${{ github.event.inputs.vfr_enabled }}"
 
     - name: Upload processed video
       uses: actions/upload-artifact@v4
