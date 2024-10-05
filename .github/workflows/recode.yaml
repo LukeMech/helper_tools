@@ -24,8 +24,12 @@ on:
         default: false
         type: boolean
 
-run-name: ${{ github.event.inputs.output_filename }} | Audio - ${{ github.event.inputs.a_bitrate }}, Video - ${{ github.event.inputs.vid_quality }}
 
+run-name: >-
+  ${{ github.event.inputs.vfr_enabledci-systems' == "true"
+    && ${{ github.event.inputs.output_filename }} | Audio - ${{ github.event.inputs.a_bitrate }}, Video - ${{ github.event.inputs.vid_quality }}
+    || ${{ github.event.inputs.output_filename }} | Audio - ${{ github.event.inputs.a_bitrate }}, Video - ${{ github.event.inputs.vid_quality }}, VFR }}
+   
 jobs:
   recode:
     runs-on: ubuntu-latest
@@ -41,7 +45,7 @@ jobs:
     
     - name: Run video processing script
       run: |
-        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}"
+        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}" ${{ github.event.inputs.vfr_enabled }}
 
     - name: Upload processed video
       uses: actions/upload-artifact@v4
