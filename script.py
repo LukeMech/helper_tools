@@ -103,7 +103,7 @@ if __name__ == "__main__":
     parser.add_argument('--qa', metavar='BITRATE', required=True, help='Audio bitrate (e.g. 96k)')
     parser.add_argument('--qv', metavar='CRF', required=True, help='Video CRF quality (lower = better, e.g. 27)')
     parser.add_argument('--output', metavar='NAME', required=True, help='Base name for the output file')
-    parser.add_argument('--vfr', action='store_true', help='Enable Variable Frame Rate mode (VFR)')
+    parser.add_argument('--vfr', action=argparse.BooleanOptionalAction, help='Enable Variable Frame Rate mode (VFR)')
     
     args = parser.parse_args()
 
@@ -121,4 +121,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Start file processing
-    processed_file = process_file(input_file, a_bit, vid_q, out_n, vfr_e)
+    processed_file = process_file(input_file, args.qa, args.qv, args.output, args.vfr)
