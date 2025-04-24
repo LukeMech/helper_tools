@@ -7,7 +7,7 @@ on:
         description: 'URL do pliku wideo'
         required: true
       output_filename:
-        description: 'Nazwa pliku zip wyjścia'
+        description: 'Nazwa pliku wyjścia (.zip)'
         required: true
         default: 'out'
       a_bitrate:
@@ -15,11 +15,11 @@ on:
         required: true
         default: '96k'
       vid_quality:
-        description: 'Jakość wideo ~15-~30'
+        description: 'Jakość wideo ~15-~30 (więcej = niższa jakość)'
         required: true
         default: '27'
       vfr_enabled:
-        description: 'Włącz VFR (dla .wmv)'
+        description: 'Włącz VFR (dla plików *.wmv)'
         required: true
         default: false
         type: boolean
