@@ -4,46 +4,37 @@ on:
   workflow_dispatch:
     inputs:
       url:
-        description: 'URL do pliku wideo'
+        description: 'URL for video file'
         required: true
       output_filename:
-        description: 'Nazwa pliku wyjścia (.zip)'
+        description: 'Output file name (for zip)'
         required: true
         default: 'out'
       a_bitrate:
-        description: 'Bitrate audio 64/96/128/160/192k'
+        description: 'Audio bitrate (64k/96k/128k/160k/192k)'
         required: true
         default: '96k'
       vid_quality:
-        description: 'Jakość wideo ~15-~30 (więcej = niższa jakość)'
+        description: 'Video quality ~15 - ~30 (more = lower quality)'
         required: true
         default: '27'
       vfr_enabled:
-        description: 'Włącz VFR (dla plików *.wmv)'
+        description: 'Enable VFR (for .wmv files)'
         required: true
         default: false
-        type: boolean
-      mpdec_enabled:
-        description: 'Włącz mpdecimate (ucinanie powtarzających się klatek)'
-        required: true
-        default: true
         type: boolean
 
 
 run-name: >-
-  ${{ 
-    github.event.inputs.vfr_enabled == 'true' && github.event.inputs.mpdec_enabled == 'true' &&
-      format('{0} | Audio - {1}, Video - {2}, VFR, MPD', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
-    || github.event.inputs.vfr_enabled == 'true' &&
-      format('{0} | Audio - {1}, Video - {2}, VFR', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
-    || github.event.inputs.mpdec_enabled == 'true' &&
-      format('{0} | Audio - {1}, Video - {2}, MPD', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
-    || format('{0} | Audio - {1}, Video - {2}', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
-  }}
+  ${{ github.event.inputs.vfr_enabled == 'true'
+    && format('{0} | Audio - {1}, Video - {2}, VFR',
+              inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)              
+    || format('{0} | Audio - {1}, Video - {2}',
+              inputs.output_filename, inputs.a_bitrate, inputs.vid_quality) }}
    
 jobs:
   recode:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -56,7 +47,12 @@ jobs:
     
     - name: Run video processing script
       run: |
-        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}" "${{ github.event.inputs.vfr_enabled }}" "${{ github.event.inputs.mpdec_enabled }}"
+        python3 ./script.py \
+          --url "${{ github.event.inputs.url }}" \
+          --q_a "${{ github.event.inputs.a_bitrate }}" \
+          --q_v "${{ github.event.inputs.vid_quality }}" \
+          --output "${{ github.event.inputs.output_filename }}" \
+          ${{ github.event.inputs.vfr_enabled == 'true' && '--vfr' || '' }}
 
     - name: Upload processed video
       uses: actions/upload-artifact@v4
