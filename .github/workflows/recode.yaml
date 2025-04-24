@@ -34,7 +34,8 @@ run-name: >-
    
 jobs:
   recode:
-    runs-on: windows-latest
+    # runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -42,8 +43,8 @@ jobs:
     - name: Install ffmpeg
       uses: FedericoCarboni/setup-ffmpeg@v3
       #run: |
-     #   brew update
-     #   brew install ffmpeg
+      #   brew update
+      #   brew install ffmpeg
     
     - name: Run video processing script
       shell: bash
