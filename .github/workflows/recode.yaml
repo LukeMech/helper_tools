@@ -46,6 +46,7 @@ jobs:
      #   brew install ffmpeg
     
     - name: Run video processing script
+      shell: bash
       run: |
         python3 ./script.py \
           --url "${{ github.event.inputs.url }}" \
