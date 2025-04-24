@@ -31,11 +31,15 @@ on:
 
 
 run-name: >-
-  ${{ github.event.inputs.vfr_enabled == 'true'
-    && format('{0} | Audio - {1}, Video - {2}, VFR',
-              inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)              
-    || format('{0} | Audio - {1}, Video - {2}',
-              inputs.output_filename, inputs.a_bitrate, inputs.vid_quality) }}
+  ${{ 
+    github.event.inputs.vfr_enabled == 'true' && github.event.inputs.mpdec_enabled == 'true' &&
+      format('{0} | Audio - {1}, Video - {2}, VFR, MPD', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
+    || github.event.inputs.vfr_enabled == 'true' &&
+      format('{0} | Audio - {1}, Video - {2}, VFR', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
+    || github.event.inputs.mpdec_enabled == 'true' &&
+      format('{0} | Audio - {1}, Video - {2}, MPD', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
+    || format('{0} | Audio - {1}, Video - {2}', inputs.output_filename, inputs.a_bitrate, inputs.vid_quality)
+  }}
    
 jobs:
   recode:
