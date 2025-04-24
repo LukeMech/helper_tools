@@ -33,9 +33,9 @@ def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled, mpdecima
                 # Wyświetl postęp tylko co 1%
                 if int(percent_downloaded) >= last_percent_reported + 1:
                     last_percent_reported = int(percent_downloaded)
-                    print(f"Pobrano: {bytes_downloaded} / {total_size} bajtów ({percent_downloaded:.2f}%)", flush=True)
+                    print(f"Downloaded: {bytes_downloaded} / {total_size} bytes ({percent_downloaded:.2f}%)", flush=True)
                     
-    print(f"\nPobrano plik: {input_file}", flush=True)
+    print(f"\nDownloaded: {input_file}", flush=True)
         
     # Wyciągnij nazwę pliku bez rozszerzenia
     file_name_without_ext = os.path.splitext(os.path.basename(input_file))[0]
@@ -59,6 +59,8 @@ def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled, mpdecima
         
     # Dodaj output file na końcu i uruchom
     ffmpeg_command.append(output_file)
+
+    print(f"\n\nRunning: {ffmpeg_command}", flush=True)
     subprocess.run(ffmpeg_command)
     
     print(f"Processed file saved as: {output_file}", flush=True)
