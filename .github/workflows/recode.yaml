@@ -23,6 +23,11 @@ on:
         required: true
         default: false
         type: boolean
+      mpdec_enabled:
+        description: 'Włącz mpdecimate (ucinanie powtarzających się klatek)'
+        required: true
+        default: true
+        type: boolean
 
 
 run-name: >-
@@ -47,7 +52,7 @@ jobs:
     
     - name: Run video processing script
       run: |
-        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}" "${{ github.event.inputs.vfr_enabled }}"
+        python3 ./script.py "${{ github.event.inputs.url }}" "${{ github.event.inputs.a_bitrate }}" "${{ github.event.inputs.vid_quality }}" "${{ github.event.inputs.output_filename }}" "${{ github.event.inputs.vfr_enabled }}" "${{ github.event.inputs.mpdec_enabled }}"
 
     - name: Upload processed video
       uses: actions/upload-artifact@v4
