@@ -50,8 +50,8 @@ jobs:
       run: |
         python3 ./script.py \
           --url "${{ github.event.inputs.url }}" \
-          --q_a "${{ github.event.inputs.a_bitrate }}" \
-          --q_v "${{ github.event.inputs.vid_quality }}" \
+          --qa "${{ github.event.inputs.a_bitrate }}" \
+          --qv "${{ github.event.inputs.vid_quality }}" \
           --output "${{ github.event.inputs.output_filename }}" \
           ${{ github.event.inputs.vfr_enabled == 'true' && '--vfr' || '' }}
 
