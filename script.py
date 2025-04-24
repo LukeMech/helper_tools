@@ -3,7 +3,7 @@ import sys
 import subprocess
 import urllib.request
 
-def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled):
+def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled, mpdecimate_enabled):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
     req = urllib.request.Request(url, headers=headers)
     input_file =  f"{output_name}.in"
@@ -52,7 +52,11 @@ def process_file(url, audio_bit, vid_quality, output_name, vfr_enabled):
     # Warunek dodający flagę VFR
     if vfr_enabled:
         ffmpeg_command.extend(['-vsync', 'vfr'])
-
+        
+    # Warunek dodający flagę mpdecimate
+    if mpdecimate_enabled:
+        ffmpeg_command.extend(['-vf', 'mpdecimate'])
+        
     # Dodaj output file na końcu i uruchom
     ffmpeg_command.append(output_file)
     subprocess.run(ffmpeg_command)
@@ -67,6 +71,7 @@ if __name__ == "__main__":
     vid_q = sys.argv[3]  # Jakość wideo podana przez użytkownika
     out_n = sys.argv[4]  # Nazwa pliku wyjściowego
     vfr_e = sys.argv[5].lower() == 'true' # Włączenie vfr
-        
+    mpdec_e = sys.argv[6].lower() == 'true' # Włączenie mpdecimate (wycinanie powtarzających się klatek)
+    
     # Uruchom przetwarzanie pliku
-    process_file(d_url, a_bit, vid_q, out_n, vfr_e)
+    process_file(d_url, a_bit, vid_q, out_n, vfr_e, mpdec_e)
