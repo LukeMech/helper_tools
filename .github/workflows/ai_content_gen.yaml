@@ -1,0 +1,395 @@
+name: AI Content Generator
+
+env:
+  python: 3.12
+
+on: 
+  workflow_dispatch:
+    inputs:
+      custom_settings:
+        description: Url for custom settings json file
+
+jobs:
+
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      amount: ${{ steps.settings.outputs.amount }}
+      txt2txt: ${{ steps.settings.outputs.txt2txt }}
+      txt2img: ${{ steps.settings.outputs.txt2img }}
+      txt2vid: ${{ steps.settings.outputs.txt2vid }}
+      img2img: ${{ steps.settings.outputs.img2img }}
+      img2vid: ${{ steps.settings.outputs.img2vid }}
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v4
+
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.python }}
+
+    - name: Check flow config file
+      working-directory: ai_content_gen/scripts
+      id: settings
+      env:
+        SETTINGS: ${{ github.event.inputs.custom_settings }}
+        CONFIG_FOLDER: '../config'
+      run: python parse_cfg.py
+      
+    - name: Upload settings
+      uses: actions/upload-artifact@v4
+      with:
+        name: settings
+        path: ai_content_gen/config/cfg.json
+
+
+  txt2txt:
+    runs-on: ubuntu-latest
+    needs: config
+    outputs:
+      out: ${{ steps.out.outputs.out }}
+
+    if: ${{ always() && !failure() && !cancelled() && fromJson(needs.config.outputs.txt2txt).active }}
+    steps:
+
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python }}
+      - name: Set swap (more RAM)
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 15
+
+      - name: Download config
+        uses: actions/download-artifact@v4
+        with:
+          name: settings
+          path: ai_content_gen/config
+
+      - name: Run script
+        working-directory: ai_content_gen/scripts
+        id: out
+        env:
+          CONFIG_FOLDER: '../config'
+        run: python txt2txt.py
+
+      - name: Upload prompts
+        uses: actions/upload-artifact@v4
+        with:
+          name: prompts
+          path: ${{ steps.out.outputs.file }}
+
+
+  txt2img:
+    runs-on: ubuntu-latest
+    needs: [config, txt2txt]     
+
+    if: ${{ always() && !failure() && !cancelled() && fromJson(needs.config.outputs.txt2img).active }}
+    strategy:
+      matrix:
+        ai: ${{ fromJson(needs.config.outputs.txt2img).ai }}
+        mix0: ${{ fromJson(needs.config.outputs.amount) }}
+    
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python }}
+      - name: Set swap (more RAM)
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 15
+
+      - name: Download config
+        uses: actions/download-artifact@v4
+        with:
+          name: settings
+          path: ai_content_gen/config
+
+      - name: Run script
+        working-directory: ai_content_gen/scripts
+        id: out
+        env:
+          CONFIG_FOLDER: '../config'
+          txt2txt: ${{ needs.txt2txt.outputs.out }}
+          ai: ${{ matrix.ai }}
+          num: ${{ matrix.mix0 }}
+          runnum: ${{ github.run_number }}
+        run: python txt2img.py
+      
+      - name: Upload image
+        uses: actions/upload-artifact@v4
+        with:
+          name: txt2img-${{ matrix.mix0 }}-${{ matrix.ai }}
+          path: ${{ steps.out.outputs.out }}
+
+  txt2vid:
+    runs-on: ubuntu-latest
+    needs: [config, txt2txt]
+    outputs:
+      out: ${{ steps.out.outputs.out }}
+
+    if: ${{ always() && !failure() && !cancelled() && fromJson(needs.config.outputs.txt2vid).active }}
+    strategy:
+      matrix:
+        ai: ${{ fromJson(needs.config.outputs.txt2vid).ai }}
+        mix0: ${{ fromJson(needs.config.outputs.amount) }}
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Remove components for disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+            tool-cache: true
+            swap-storage: false
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python }}
+      - name: Setup ffmpeg
+        run: sudo apt update && sudo apt install ffmpeg -y
+      - name: Set swap (more RAM)
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 35
+          
+      - name: Download config
+        uses: actions/download-artifact@v4
+        with:
+          name: settings
+          path: ai_content_gen/config
+
+      - name: Run script
+        working-directory: ai_content_gen/scripts
+        id: out
+        env:
+          CONFIG_FOLDER: '../config'
+          txt2txt: ${{ needs.txt2txt.outputs.out }}
+          ai: ${{ matrix.ai }}
+          num: ${{ matrix.mix0 }}
+          runnum: ${{ github.run_number }}
+        run: python txt2vid.py
+
+      - name: Upload video
+        uses: actions/upload-artifact@v4
+        with:
+          name: txt2vid-${{ matrix.mix0 }}-${{ matrix.ai }}
+          path: ${{ steps.out.outputs.out }}
+
+  img2img:
+    runs-on: ubuntu-latest
+    needs: [config, txt2txt, txt2img]
+
+    if: ${{ always() && !failure() && !cancelled() && fromJson(needs.config.outputs.img2img).active }}
+    strategy:
+      matrix:
+        ai: ${{ fromJson(needs.config.outputs.img2img).ai }}
+        mix1: ${{ fromJson(needs.config.outputs.txt2img).ai }}
+        mix0: ${{ fromJson(needs.config.outputs.amount) }}
+          
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python }}
+      - name: Set swap (more RAM)
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 15
+
+      - name: Download config
+        uses: actions/download-artifact@v4
+        with:
+          name: settings
+          path: ai_content_gen/config
+
+      - name: Download images from txt2img
+        if: ${{ fromJson(needs.config.outputs.txt2img).active }}
+        uses: actions/download-artifact@v4
+        with:
+          name: txt2img-${{ matrix.mix0 }}-${{ matrix.mix1 }}
+          path: ai_content_gen/config/txt2img
+          
+      - name: Run script
+        working-directory: ai_content_gen/scripts
+        id: out
+        env:
+          CONFIG_FOLDER: '../config'
+          ai: ${{ matrix.ai }}
+          txt2txt: ${{ needs.txt2txt.outputs.out }}
+          num: ${{ matrix.mix0 }}
+          runnum: ${{ github.run_number }}
+        run: python img2img.py
+
+      - name: Upload image
+        uses: actions/upload-artifact@v4
+        with:
+          name: img2img-${{ matrix.mix0 }}-${{ matrix.mix1 }}-${{ matrix.ai }}
+          path: ${{ steps.out.outputs.out }}
+
+  img2vid:
+    runs-on: ubuntu-latest
+    needs: [config, img2img]
+    outputs:
+      out: ${{ steps.out.outputs.out }}
+
+    if: ${{ always() && !failure() && !cancelled() && fromJson(needs.config.outputs.img2vid).active }}
+    strategy:
+      matrix:
+        ai: ${{ fromJson(needs.config.outputs.img2vid).ai }}
+        mix2: ${{ fromJson(needs.config.outputs.img2img).ai }}
+        mix1: ${{ fromJson(needs.config.outputs.txt2img).ai }}
+        mix0: ${{ fromJson(needs.config.outputs.amount) }}
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Remove components for disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+            tool-cache: true
+            swap-storage: false
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python }}
+      - name: Setup ffmpeg
+        run: sudo apt update && sudo apt install ffmpeg -y
+      - name: Set swap (more RAM)
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 35
+          
+      - name: Download config
+        uses: actions/download-artifact@v4
+        with:
+          name: settings
+          path: ai_content_gen/config
+
+      - name: Download images from txt2img
+        if: ${{ fromJson(needs.config.outputs.txt2img).active }}
+        uses: actions/download-artifact@v4
+        with:
+          name: txt2img-${{ matrix.mix0 }}-${{ matrix.mix1 }}
+          path: ai_content_gen/config/txt2img
+      - name: Download images from img2img
+        if: ${{ fromJson(needs.config.outputs.img2img).active }}
+        uses: actions/download-artifact@v4
+        with:
+          name: img2img-${{ matrix.mix0 }}-${{ matrix.mix1 }}-${{ matrix.mix2 }}
+          path: ai_content_gen/config/img2img
+
+      - name: Run script
+        working-directory: ai_content_gen/scripts
+        id: out
+        env:
+          CONFIG_FOLDER: '../config'
+          ai: ${{ matrix.ai }}
+          runnum: ${{ github.run_number }}
+        run: python img2vid.py
+
+      - name: Upload video
+        uses: actions/upload-artifact@v4
+        with:
+          name: img2vid-${{ matrix.mix0 }}-${{ matrix.mix1 }}-${{ matrix.mix2 }}-${{ matrix.ai }}
+          path: ${{ steps.out.outputs.out }}
+
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [config, txt2txt, txt2vid, img2vid]
+    if: ${{ always() && !failure() && !cancelled() }}
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python }}
+      
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ai_content_gen/config/tmp
+
+      - name: Run script
+        working-directory: ai_content_gen/scripts
+        id: out
+        env:
+          CONFIG_FOLDER: '../config'
+          txt2txt: ${{ needs.txt2txt.outputs.out }}
+        run: python cleanup.py
+
+      - name: Upload txt2img
+        if: ${{ fromJson(needs.config.outputs.txt2img).active && steps.out.outputs.cleanup == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: images_txt2img
+          path: ${{ steps.out.outputs.txt2img }}
+      - name: Upload txt2vid
+        if: ${{ fromJson(needs.config.outputs.txt2vid).active && steps.out.outputs.cleanup == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gifs_videos_txt2vid
+          path: ${{ steps.out.outputs.txt2vid }}
+      - name: Upload img2img
+        if: ${{ fromJson(needs.config.outputs.img2img).active && steps.out.outputs.cleanup == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: images_img2img
+          path: ${{ steps.out.outputs.img2img }}
+      - name: Upload img2vid
+        if: ${{ fromJson(needs.config.outputs.img2vid).active && steps.out.outputs.cleanup == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gifs_videos_img2vid
+          path: ${{ steps.out.outputs.img2vid }}
+
+      - name: Cleanup artifacts (1/4)
+        if: ${{ steps.out.outputs.cleanup == 'true' }}
+        uses: geekyeggo/delete-artifact@v4  
+        with:
+          name: |
+            txt2img-*
+            txt2vid-*
+            img2img-*
+            img2vid-*
+      - name: Cleanup artifacts (2/4)
+        if: ${{ steps.out.outputs.cleanup == 'true' }}
+        uses: geekyeggo/delete-artifact@v4  
+        with:
+          name: |
+            txt2img-*
+            txt2vid-*
+            img2img-*
+            img2vid-*
+      - name: Cleanup artifacts (3/4)
+        if: ${{ steps.out.outputs.cleanup == 'true' }}
+        uses: geekyeggo/delete-artifact@v4  
+        with:
+          name: |
+            txt2img-*
+            txt2vid-*
+            img2img-*
+            img2vid-*
+      - name: Cleanup artifacts (4/4)
+        if: ${{ steps.out.outputs.cleanup == 'true' }}
+        uses: geekyeggo/delete-artifact@v4  
+        with:
+          name: |
+            txt2img-*
+            txt2vid-*
+            img2img-*
+            img2vid-*
