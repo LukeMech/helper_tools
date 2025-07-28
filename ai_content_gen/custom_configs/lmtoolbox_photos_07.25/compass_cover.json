@@ -1,0 +1,32 @@
+{
+    "global": {
+        "out_amount": 4
+    },
+
+    "txt2txt": {
+        "active": true, 
+        "prompt": "Compass and map as a background image"
+    },
+    "txt2img": {
+        "active": true, 
+        "prompt": "{txt2txt.out}",
+        "height": 256, 
+        "width": 512,
+        "upscale": {
+            "enable": true,
+            "scale": 2
+        },
+        "matrix": {
+            "models": "{txt2img.models}"
+        }
+    },
+    "txt2vid": {
+        "active": false
+    },
+    "img2img": {
+        "active": false
+    },
+    "img2vid": {
+        "active": false
+    }
+}
