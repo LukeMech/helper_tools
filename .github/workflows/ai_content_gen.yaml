@@ -363,36 +363,9 @@ jobs:
           name: gifs_videos_img2vid
           path: ${{ steps.out.outputs.img2vid }}
 
-      - name: Cleanup artifacts (1/4)
+      - name: Cleanup artifacts
         if: ${{ steps.out.outputs.cleanup == 'true' }}
-        uses: geekyeggo/delete-artifact@v4  
-        with:
-          name: |
-            txt2img-*
-            txt2vid-*
-            img2img-*
-            img2vid-*
-      - name: Cleanup artifacts (2/4)
-        if: ${{ steps.out.outputs.cleanup == 'true' }}
-        uses: geekyeggo/delete-artifact@v4  
-        with:
-          name: |
-            txt2img-*
-            txt2vid-*
-            img2img-*
-            img2vid-*
-      - name: Cleanup artifacts (3/4)
-        if: ${{ steps.out.outputs.cleanup == 'true' }}
-        uses: geekyeggo/delete-artifact@v4  
-        with:
-          name: |
-            txt2img-*
-            txt2vid-*
-            img2img-*
-            img2vid-*
-      - name: Cleanup artifacts (4/4)
-        if: ${{ steps.out.outputs.cleanup == 'true' }}
-        uses: geekyeggo/delete-artifact@v4  
+        uses: geekyeggo/delete-artifact@v5 
         with:
           name: |
             txt2img-*
