@@ -5,12 +5,12 @@
     },
 
     "txt2txt": {
-        "active": true, 
+        "active": false, 
         "prompt": "Flat icon-style compass over abstract map contours, simple and elegant design, pastel tones"
     },
     "txt2img": {
         "active": true, 
-        "prompt": "{txt2txt.out}",
+        "prompt": "Flat icon-style compass over abstract map contours, simple and elegant design, pastel tones",
         "height": 256, 
         "width": 512,
         "upscale": {
