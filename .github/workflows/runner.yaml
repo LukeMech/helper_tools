@@ -1,0 +1,30 @@
+name: Runner for SSH
+
+on:
+  workflow_dispatch:
+
+jobs:
+  remote:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Install Cloudflared
+        run: |
+          curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+          sudo dpkg -i cloudflared.deb
+          sudo cloudflared service install ${{ secrets.CLOUDFLARED_TOKEN }}
+          sudo systemctl start cloudflared
+
+      - name: Add 'remote' user with sudo privileges
+        run: |
+          sudo useradd -m code
+          echo "code:${{ secrets.REMOTE_PASSWORD }}" | sudo chpasswd
+          echo 'code ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/remote
+          sudo -u code rm -rf /home/code/*
+          
+      - name: Start SSH server
+        run: |
+          sudo systemctl start ssh
+
+      - name: Run forever
+        run: while true; do sleep 60; done

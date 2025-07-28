@@ -1,0 +1,112 @@
+{
+   "txt2img": {
+
+      "xl-t": {
+         "model": "stabilityai/sdxl-turbo",
+         "inference_count": 5,
+         "packages": ["torchvision~=0.17.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "invisible-watermark~=0.2.0", "omegaconf~=2.3.0"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion" 
+      },
+   
+      "xl": {
+         "model": "stabilityai/stable-diffusion-xl-base-1.0",
+         "adapter": "latent-consistency/lcm-lora-sdxl",
+         "inference_count": 5,
+         "packages": ["torchvision~=0.17.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "invisible-watermark~=0.2.0", "omegaconf~=2.3.0", "peft~=0.8.1"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion-lora" 
+      },
+   
+      "kdn": {
+         "model": "kandinsky-community/kandinsky-2-2-decoder",
+         "inference_count": 4,
+         "packages": ["torchvision~=0.17.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "invisible-watermark~=0.2.0", "omegaconf~=2.3.0"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion" 
+      },
+   
+      "dsh": {
+         "model": "Lykon/dreamshaper-8",
+         "adapter": "latent-consistency/lcm-lora-sdv1-5",
+         "inference_count": 12,
+         "packages": ["torchvision~=0.17.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "invisible-watermark~=0.2.0", "omegaconf~=2.3.0", "peft~=0.8.1"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion-lora" 
+      }
+   },
+
+   "txt2vid": {
+
+      "zs2": {
+         "model": "cerspense/zeroscope_v2_576w",
+         "fps": 7,
+         "inference_count": 5,
+         "frames": 14,
+         "packages": ["torchvision~=0.16.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "opencv-python-headless~=4.9.0.80", "moviepy~=1.0.3", "audiocraft~=1.2.0", "pillow~=10.2.0"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "zeroscope",
+         "upscaler": "cerspense/zeroscope_v2_XL"
+      }
+   },
+
+   "img2img": {
+
+      "kdn": {
+         "model": "kandinsky-community/kandinsky-2-2-decoder",
+         "inference_count": 8,
+         "packages": ["torchvision~=0.17.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "invisible-watermark~=0.2.0", "omegaconf~=2.3.0"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion" 
+      },
+
+      "dsh": {
+         "model": "Lykon/dreamshaper-8",
+         "adapter": "latent-consistency/lcm-lora-sdv1-5",
+         "inference_count": 15,
+         "packages": ["torchvision~=0.17.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "invisible-watermark~=0.2.0", "omegaconf~=2.3.0", "peft~=0.8.1"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion-lora" 
+      }
+   },
+
+   "img2vid": {
+
+      "svd": {
+         "model": "stabilityai/stable-video-diffusion-img2vid",
+         "fps": 7,
+         "inference_count": 6,
+         "frames": 14,
+         "packages": ["torchvision~=0.16.0", "diffusers~=0.25.1", "transformers~=4.37.2", "accelerate~=0.26.1", "opencv-python-headless~=4.9.0.80", "moviepy~=1.0.3", "audiocraft~=1.2.0"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "stable-diffusion"
+      }
+   },
+
+   "txt2txt": {
+
+      "gpt2-sd": {
+         "model": "Ar4ikov/gpt2-650k-stable-diffusion-prompt-generator",
+         "prompt_template": "{prompt}",
+         "packages": ["transformers~=4.37.2", "torch~=2.2.0"],
+         "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+         "helper": "gpt2-sd" 
+      }
+   },
+
+   "upscale": {
+      "dld_url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+      "script": "https://raw.githubusercontent.com/xinntao/Real-ESRGAN/master/inference_realesrgan.py",
+      "packages": ["tqdm~=4.66.1", "basicsr~=1.4.2", "realesrgan~=0.3.0", "numpy~=1.26.3", "torchvision~=0.16.0"],
+      "extra_indexes": ["https://download.pytorch.org/whl/cpu"],
+      "helper": "realesrgan"
+   },
+   "music": {
+      "model": "facebook/musicgen-stereo-medium",
+      "helper": "fb" 
+   },
+   "img2txt": {
+      "model": "nlpconnect/vit-gpt2-image-captioning",
+      "helper": "vit" 
+   }
+}

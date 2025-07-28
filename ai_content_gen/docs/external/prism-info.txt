@@ -1,0 +1,8 @@
+Line highlight => https://prismjs.com/plugins/line-highlight/
+Line numbers => https://prismjs.com/plugins/line-numbers/
+File fetch => https://prismjs.com/plugins/file-highlight/
+Command line => https://prismjs.com/plugins/command-line/
+Normalize whitespace => https://prismjs.com/plugins/normalize-whitespace/
+Match braces => https://prismjs.com/plugins/match-braces/
+Diff highlight => https://prismjs.com/plugins/diff-highlight/
+Treeview => https://prismjs.com/plugins/treeview/

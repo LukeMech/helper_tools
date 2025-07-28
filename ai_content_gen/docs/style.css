@@ -1,0 +1,171 @@
+body {
+    background-color: #282c34;
+    color: #ebeaea;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+h1 {
+    font-size: 35px;
+    text-align: center;
+    border: 3px solid rgba(255, 0, 0, 0.778);
+    padding: 20px;
+    border-radius: 20px;
+    width: fit-content;
+    margin: auto;
+}
+.subtitle {
+    text-align: center;
+    border: 3px solid rgba(21, 255, 0, 0.686);
+    padding: 15px;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 10px auto;
+}
+h2, .subtitle {
+    font-size: 25px;
+}
+p {
+    margin: 10px;
+    font-size: 20px;
+}
+summary {
+    cursor: pointer;
+}
+a .link {
+    font-size: 20px;
+    color: rgb(225, 213, 199);
+    background-color: rgba(255, 228, 196, 0.236);
+}
+.pre {
+    width: fit-content;
+    margin: 10px auto;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.nice {
+    font-size: 18px;
+    text-align: center;
+    overflow-x: auto;
+    max-width: 100%;
+    white-space: nowrap;
+    padding: 5px 0px;
+    margin-bottom: 5px;
+    margin: auto;
+    width: fit-content;
+}
+.nice code, .format-code code {
+    color: rgb(243, 241, 238);
+    background-color: rgba(161, 124, 75, 0.609);
+    font-size: 17px;
+    padding: 2px;
+    border-radius: 6px;
+}
+.nice .code {
+    padding: 6px 10px;
+}
+.nice .format-off {
+    background-color: initial;
+    font-size: initial;
+    padding: initial;
+    border-radius: initial;
+}
+.nice div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.nice th {
+    padding: 5px 10px;
+    background-color: rgba(255, 225, 55, 0.226) ;
+    border-radius: 10px;
+}
+.nice td {
+    padding: 3px 10px;
+    background-color: rgba(240, 226, 221, 0.226);
+    border-radius: 10px;
+}
+.nice .limited {
+    background-color: rgba(235, 88, 35, 0.216);
+}
+.nice .limited-y {
+    background-color: rgba(35, 232, 235, 0.216);
+}
+.nice .req {
+    border: 2px solid #b0a3305d; 
+    border-radius: 10px;
+    padding: 3px 6px;
+    margin: 7px;
+}
+.nice .fa-circle-info {
+    color: rgba(255, 255, 0, 0.804);
+}
+
+.more-info .sum-txt {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.more-info {
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 7px;
+    margin: 7px auto auto;
+    width: fit-content;
+    max-width: 100%;
+}
+.green {
+    border: 2px solid #3b9520;
+}
+.blue {
+    border: 2px solid #0599a7; 
+}
+.purple {
+    border: 2px solid #6105a7; 
+}
+.yellow {
+    border: 2px solid #b0a330;
+}
+
+
+@keyframes rainbow {
+    0% {
+      color: orange;
+    }
+    10% {
+      color: purple;
+    }
+    20% {
+      color: red;
+    }
+    30% {
+      color: CadetBlue;
+    }
+    40% {
+      color: yellow;
+    }
+    50% {
+      color: coral;
+    }
+    60% {
+      color: green;
+    }
+    70% {
+      color: cyan;
+    }
+    80% {
+      color: DeepPink;
+    }
+    90% {
+      color: DodgerBlue;
+    }
+    100% {
+      color: orange;
+    }
+}
+
+.footer-text {
+    animation: rainbow 20s infinite;
+    font-size: 20px;
+    margin-bottom: 40px;
+}

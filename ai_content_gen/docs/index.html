@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛸 Usage of generator</title>
+    <script src="./external/prism.js"></script>   
+    <script src="https://kit.fontawesome.com/d73fbba09b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./external/prism.css" />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="rainbow-braces match-braces no-brace-select ">
+    <h1>🍹 Usage of custom settings.json file</h1>
+    <h2 class="subtitle">🚀 Look at <a href="https://github.com/AI-Image-Gen/generator/blob/main/config/settings.json" target="_blank"><code class="link">config/settings.json</code></a> as template</h2>
+    
+    <p>🚨 <em><b>Default</b> values are used in previews</em> </p>
+
+    <div class="nice"><table>
+        <thead>
+            <tr>
+                <th>🏵️ Cell color</th>
+                <th>🛸 If not properly configured</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="limited">Red</td>
+                <td>Gives whole generation error</td>
+            </tr>
+            <tr>
+                <td class="limited-y">Blue</td>
+                <td>Repair or fallback to default value</td>
+            </tr>
+            <tr>
+                <td>Normal</td>
+                <td>Fallback to default value</td>
+            </tr>
+        </tbody>
+    </table></div>
+
+    <details class="more-info yellow">
+        <summary class="sum-txt">📖 Variables</summary>
+
+        <h2>📔 Types of data</h2>
+        <div class="nice"><table>
+            <thead><tr>
+                <th>🔢 Input</th>
+                <th>🛸 Type</th>
+                <th>🔥 Inputs</th>
+                <th>💬 Examples</th>
+            </tr></thead>
+            <tbody><tr>
+                <td class="code"><code>bool</code></td>
+                <td>boolean</td>
+                <td><code>true</code> or <code>false</code></td>
+                <td><code>true</code></td>
+            </tr>
+            <tr>
+                <td class="code"><code>int</code></td>
+                <td>integer</td>
+                <td>any <code>number</code></td>
+                <td><code>69</code></td>
+            </tr>
+            <tr>
+                <td class="code"><code>str</code></td>
+                <td>string</td>
+                <td>any <code>characters</code></td>
+                <td><code>"some input thingy"</code></td>
+            </tr>
+            <tr>
+                <td class="code"><code>arr</code></td>
+                <td>array</td>
+                <td>array of some <code>inputs</code></td>
+                <td>
+                    <div><code>["hello", "there"]</code></div>
+                    <details>
+                        <summary>More</summary>
+                        <div><code>[2, 1, 3, 7]</code></div>
+                        <div><code>[true, false]</code></div>
+                        <div><code>["hello", 69, false]</code></div>
+                    </details>
+                </td>
+            </tr></tbody>
+        </table></div>
+        
+        <h2>💬 Input strings</h2>
+        <p>🌐 <em>Example use:</em></p>
+        <div class="pre"><pre><code class="language-json">
+            "input": "{txt2img.models}"
+        </code></pre></div>
+        
+        <details class="more-info purple">
+            <summary class="format-code"> <i style="color: #8e35d2; font-size: 20px;" class="fa-solid fa-text-width"></i>  <code>txt2txt</code></summary>
+            <div class="pre"><pre><code class="language-json">
+                "input": "{txt2txt.Input}"
+            </code></pre></div>
+
+            <p>🚀 <em>Generated during workflow</em></p>
+            <div class="nice"><table>
+                <thead>
+                    <tr>
+                        <th>🔢 Input</th>
+                        <th>🛸 Meaning</th>
+                        <th>🔥 Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><th colspan="3" class="limited"><details>
+                        <summary><i class="fa-solid fa-circle-info"></i> Requirements</summary>
+                        <div class="pre"><pre><code class="language-json format-off">
+                                "txt2txt": {
+                                    "active": true
+                                }
+                            </code></pre></div>
+                    </details></th></tr>
+                    <tr>
+                        <td class="code"><code>out</code></td>
+                        <td>Generated AI optimized prompt <code>str</code></td>
+                        <td><details>
+                            <summary>Example</summary>
+                            <div><code>"Generate prompt for AI image generator, make sure it's between \" marks. Subject: XD"</code></div>
+                        </details></td>
+                    </tr>
+                </tbody>
+            </table></div>
+        </details>
+
+        <details class="more-info blue">
+            <summary class="format-code"> <i style="color: #0599a7; font-size: 20px;" class="fa-solid fa-file-image"></i>  <code>txt2img</code></summary>
+            <div class="pre"><pre><code class="language-json">
+                "input": "{txt2img.Input}"
+            </code></pre></div>
+
+            <div class="nice"><table>
+                <thead><tr>
+                    <th>🔢 Input</th>
+                    <th>🛸 Meaning</th>
+                    <th>🔥 Notes</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td class="code"><code>models</code></td>
+                        <td>txt2img supported AI models <code>arr</code></td>
+                        <td><details>
+                            <summary>Example</summary>
+                            <div><code>["sd-xl-v1.0"]</code></div>
+                        </details></td>
+                    </tr>
+                    <tr><th colspan="3" class="limited"><details>
+                        <summary><i class="fa-solid fa-circle-info"></i> Requirements</summary>
+                        <div class="pre"><pre><code class="language-json format-off">
+                                "txt2img": {
+                                    "active": true
+                                }
+                            </code></pre></div>
+                    </details></th></tr>
+                    <tr>
+                        <td class="code"><code>out</code></td>
+                        <td>Generated by this function images artifact name <code>str</code></td>
+                        <td><details>
+                            <summary>Example</summary>
+                            <div><code>"txt2img"</code></div>
+                        </details></td>
+                    </tr>
+                </tbody>
+            </table></div>
+        </details>
+    </details>  
+
+    <div class="pre"><pre><code class="language-json">
+        {
+            "global": {},
+            "txt2txt": {},
+            "txt2img": {},
+            "img2img": {},
+            "img_upscale": {},
+            "img2vid": {}
+        }
+    </code></pre></div>
+
+    <details class="more-info green">
+        <summary class="format-code"> <i style="color: greenyellow; font-size: 20px;" class="fa-solid fa-globe"></i>  <code>global</code></summary>
+        <div class="pre"><pre><code class="language-json">
+            "global": {
+                "clean_artifacts": true,
+                "out_amount": 1
+            }
+        </code></pre></div>
+
+        <div class="nice"><table>
+            <thead><tr>
+                <th>⚡ Setting</th>
+                <th>🔢 Input</th>
+                <th>🔥 Description</th>
+            </tr></thead>
+            <tbody>
+                <tr>
+                    <td class="code"><code>clean_artifacts</code></td>
+                    <td><code>bool</code></td>
+                    <td>Delete temporary artifacts?</td>
+                </tr>
+                <tr>
+                    <td class="code limited-y">
+                        <code>out_amount</code>
+                    </td>
+                    <td class="limited-y">
+                        <div><code>int</code></div>
+                        <div class="req"><details>
+                            <summary><i class="fa-solid fa-circle-info"></i></summary>
+                            <div class="pre"><pre><code class="language-">
+                                in range 1 - 10
+                            </code></pre></div>
+                        </details></div>
+                    </td>
+                    <td><div>How many prompts should be called?</div></td>
+                </tr>
+            </tbody>
+        </table></div>
+    </details>
+
+    <br>
+    <p class="footer-text">Made by LukeMech <i class="footer-text-i fa-regular fa-copyright"></i> 2024</p>
+      
+
+</body>
+</html>

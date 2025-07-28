@@ -1,0 +1,68 @@
+{
+    "global": {
+        "clean_artifacts": true,
+        "out_amount": 2
+    },
+
+    "txt2txt": {
+        "active": true, 
+        "prompt": "Massive social protests and demonstrations (1970s)"
+    },
+    "txt2img": {
+        "active": true, 
+        "prompt": "{txt2txt.out}",
+        "height": 512, 
+        "width": 512,
+        "upscale": {
+            "enable": true,
+            "scale": 2
+        },
+        "matrix": {
+            "models": "{txt2img.models}"
+        }
+    },
+    "txt2vid": {
+        "active": false, 
+        "prompt": "",
+        "video": {
+            "enable": false,
+            "music": false
+        },
+        "gif": {
+            "enable": false,
+            "speed": 0
+        },
+        "matrix": {
+            "models": []
+        }
+    },
+    "img2img": {
+        "active": false, 
+        "prompt": "",
+        "image": "",
+        "height": 0, 
+        "width": 0, 
+        "upscale": {
+            "enable": false,
+            "scale": 0
+        },
+        "matrix": {
+            "models": []
+        }
+    },
+    "img2vid": {
+        "active": false, 
+        "image": "",
+        "video": {
+            "enable": false,
+            "music": false
+        },
+        "gif": {
+            "enable": false,
+            "speed": 0
+        },
+        "matrix": {
+            "models": []
+        }
+    }
+}
