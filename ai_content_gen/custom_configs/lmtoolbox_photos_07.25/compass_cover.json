@@ -14,7 +14,8 @@
         "height": 256, 
         "width": 512,
         "upscale": {
-            "enable": true,
+            "NOTE": "UPSCALER DOES NOT WORK FOR NOW",
+            "enable": false,
             "scale": 2
         },
         "matrix": {
