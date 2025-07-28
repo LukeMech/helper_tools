@@ -21,12 +21,47 @@
         }
     },
     "txt2vid": {
-        "active": false
+        "active": false, 
+        "prompt": "",
+        "video": {
+            "enable": false,
+            "music": false
+        },
+        "gif": {
+            "enable": false,
+            "speed": 0
+        },
+        "matrix": {
+            "models": []
+        }
     },
     "img2img": {
-        "active": false
+        "active": false, 
+        "prompt": "",
+        "image": "",
+        "height": 0, 
+        "width": 0, 
+        "upscale": {
+            "enable": false,
+            "scale": 0
+        },
+        "matrix": {
+            "models": []
+        }
     },
     "img2vid": {
-        "active": false
+        "active": true, 
+        "image": "{txt2img.out}",
+        "video": {
+            "enable": true,
+            "music": true
+        },
+        "gif": {
+            "enable": true,
+            "speed": 200
+        },
+        "matrix": {
+            "models": "{img2vid.models}"
+        }
     }
 }
