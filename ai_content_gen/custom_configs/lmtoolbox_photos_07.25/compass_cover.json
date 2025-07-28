@@ -52,15 +52,15 @@
         }
     },
     "img2vid": {
-        "active": true, 
+        "active": false, 
         "image": "{txt2img.out}",
         "video": {
-            "enable": true,
-            "music": true
+            "enable": false,
+            "music": false
         },
         "gif": {
-            "enable": true,
-            "speed": 200
+            "enable": false,
+            "speed": 0
         },
         "matrix": {
             "models": "{img2vid.models}"
