@@ -8,6 +8,12 @@ on:
     inputs:
       custom_settings:
         description: Url for custom settings json file
+      task_name:
+        description: Name of action to be displayed in Actions menu
+        default: AI Generator
+        
+run-name: ${{ inputs.task_name }}
+
 
 jobs:
 
