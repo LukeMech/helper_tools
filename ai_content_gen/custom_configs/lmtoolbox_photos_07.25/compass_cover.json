@@ -6,7 +6,7 @@
 
     "txt2txt": {
         "active": true, 
-        "prompt": "Compass and map as a background image"
+        "prompt": "Flat icon-style compass over abstract map contours, simple and elegant design, pastel tones"
     },
     "txt2img": {
         "active": true, 
