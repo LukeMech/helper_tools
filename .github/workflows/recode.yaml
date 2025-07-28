@@ -50,7 +50,7 @@ jobs:
       shell: bash
       run: |
         cd video_encoder
-        python3 ./script.py \
+        python3 ./recode.py \
           --url "${{ github.event.inputs.url }}" \
           --qa "${{ github.event.inputs.a_bitrate }}" \
           --qv "${{ github.event.inputs.vid_quality }}" \
