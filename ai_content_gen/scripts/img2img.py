@@ -31,7 +31,7 @@ else:
 print('\nUsing helper: ' + models['img2img'][ai]['helper'], flush=True)
 
 helper = importlib.import_module(f"img2img-helpers.{models['img2img'][ai]['helper']}")
-path = helper.run(models["img2img"][ai], config["image"], config["prompt"], config["width"], config["height"])
+path = helper.run(models["img2img"][ai], config["image"], config["prompt"], config["width"], config["height"], config["strength"])
 
 if config["upscale"]["enable"]:
     helper = importlib.import_module(f"upscale-helpers.{models['upscale']['helper']}")

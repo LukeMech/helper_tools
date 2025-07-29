@@ -2,7 +2,7 @@ from os import path, getenv
 from diffusers import AutoPipelineForImage2Image, LCMScheduler
 from diffusers.utils import load_image
 
-def run(model, pass_img, ctx, w, h):
+def run(model, pass_img, ctx, w, h, strength):
     cfg_folder = getenv("CONFIG_FOLDER")
     runnum = getenv("runnum")
 
@@ -22,7 +22,7 @@ def run(model, pass_img, ctx, w, h):
     pipe.load_lora_weights(model["adapter"])
     pipe.fuse_lora()
 
-    image = pipe(prompt=ctx, image=init_img, num_inference_steps=model["inference_count"], height=h, width=w, guidance_scale=0).images[0]
+    image = pipe(prompt=ctx, image=init_img, num_inference_steps=model["inference_count"], height=h, width=w, guidance_scale=0, strength=strength).images[0]
     image.save(savepath)
 
     return savepath

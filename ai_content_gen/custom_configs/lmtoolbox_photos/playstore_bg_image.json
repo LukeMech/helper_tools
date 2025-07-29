@@ -41,6 +41,7 @@
         "active": true, 
         "prompt": "Toolbox ruler compass background logo",
         "image": "https://toolbox.lukemech.org/static/images/ic_launcher-playstore.png",
+        "strength": 80,
         "width": 1024, 
         "height": 500, 
         "upscale": {

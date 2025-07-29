@@ -101,7 +101,7 @@ def is_valid_image(path):
             return False
 
 # Check var types
-ints = [def_cfg["global"]["out_amount"], def_cfg["txt2img"]["height"], def_cfg["txt2img"]["width"], def_cfg["txt2vid"]["gif"]["speed"], def_cfg["img2img"]["height"], def_cfg["img2img"]["width"], def_cfg["img2vid"]["gif"]["speed"], def_cfg["txt2img"]["upscale"]["scale"], def_cfg["img2img"]["upscale"]["scale"]]
+ints = [def_cfg["global"]["out_amount"], def_cfg["txt2img"]["height"], def_cfg["txt2img"]["width"], def_cfg["txt2vid"]["gif"]["speed"], def_cfg["img2img"]["height"], def_cfg["img2img"]["width"], def_cfg["img2vid"]["gif"]["speed"], def_cfg["txt2img"]["upscale"]["scale"], def_cfg["img2img"]["upscale"]["scale"], def_cfg["img2img"]["strength"]]
 strs = [def_cfg["txt2txt"]["prompt"], def_cfg["txt2img"]["prompt"], def_cfg["txt2vid"]["prompt"], def_cfg["img2img"]["prompt"], def_cfg["img2img"]["image"], def_cfg["img2vid"]["image"]]
 bools = [def_cfg["global"]["clean_artifacts"], def_cfg["txt2txt"]["active"], def_cfg["txt2img"]["active"], def_cfg["txt2vid"]["active"], def_cfg["txt2vid"]["gif"]["enable"], def_cfg["txt2vid"]["video"]["enable"], def_cfg["txt2vid"]["video"]["music"], def_cfg["img2img"]["active"], def_cfg["txt2img"]["upscale"]["enable"], def_cfg["img2img"]["upscale"]["enable"], def_cfg["img2vid"]["active"], def_cfg["img2vid"]["gif"]["enable"], def_cfg["img2vid"]["video"]["enable"], def_cfg["img2vid"]["video"]["music"]]
 for integer in ints: process_type(integer, int)
@@ -115,6 +115,7 @@ for module in width_height_modules:
 def_cfg["global"]["out_amount"] = process_integer_value(1, 10, def_cfg["global"]["out_amount"])
 def_cfg["txt2img"]["upscale"]["scale"] = process_integer_value(2, 4, def_cfg["txt2img"]["upscale"]["scale"])
 def_cfg["img2img"]["upscale"]["scale"] = process_integer_value(2, 4, def_cfg["img2img"]["upscale"]["scale"])
+def_cfg["img2img"]["strength"] = process_integer_value(0, 100, def_cfg["img2img"]["strength"])
 def_cfg["img2vid"]["gif"]["speed"] = process_integer_value(1, 1000, def_cfg["img2vid"]["gif"]["speed"])
 def_cfg["txt2vid"]["gif"]["speed"] = process_integer_value(1, 1000, def_cfg["txt2vid"]["gif"]["speed"])
 # Variable -> model type array
@@ -143,6 +144,7 @@ for module in width_height_modules:
     module["height"] = process_integer_value(256, 1024, module["height"], 64)
 settings_json["txt2img"]["upscale"]["scale"] = process_integer_value(2, 4, settings_json["txt2img"]["upscale"]["scale"])
 settings_json["img2img"]["upscale"]["scale"] = process_integer_value(2, 4, settings_json["img2img"]["upscale"]["scale"])
+settings_json["img2img"]["strength"] = process_integer_value(0, 100, settings_json["img2img"]["strength"])
 settings_json["global"]["out_amount"] = process_integer_value(1, 10, settings_json["global"]["out_amount"])
 settings_json["img2vid"]["gif"]["speed"] = process_integer_value(1, 1000, settings_json["img2vid"]["gif"]["speed"])
 settings_json["txt2vid"]["gif"]["speed"] = process_integer_value(1, 1000, settings_json["img2vid"]["gif"]["speed"])

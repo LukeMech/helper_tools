@@ -2,7 +2,7 @@ from os import path, getenv
 from diffusers import AutoPipelineForImage2Image
 from diffusers.utils import load_image
 
-def run(model, pass_img, ctx, w, h):
+def run(model, pass_img, ctx, w, h, strength):
     cfg_folder = getenv("CONFIG_FOLDER")
     runnum = getenv("runnum")
 
@@ -17,7 +17,7 @@ def run(model, pass_img, ctx, w, h):
     init_img = init_img.resize((w, h))
     pipe = AutoPipelineForImage2Image.from_pretrained(model["model"])
 
-    image = pipe(prompt=ctx, image=init_img, num_inference_steps=model["inference_count"], height=h, width=w).images[0]
+    image = pipe(prompt=ctx, image=init_img, num_inference_steps=model["inference_count"], height=h, width=w, strength=strength).images[0]
     image.save(savepath)
 
     return savepath
