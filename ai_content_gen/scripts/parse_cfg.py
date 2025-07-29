@@ -110,8 +110,8 @@ for boolean in bools: process_type(boolean, bool)
 # Integers values optimization
 width_height_modules = [def_cfg["txt2img"], def_cfg["img2img"]]
 for module in width_height_modules:
-    module["width"] = process_integer_value(256, 1024, module["width"], 8)
-    module["height"] = process_integer_value(256, 1024, module["height"], 8)
+    module["width"] = process_integer_value(256, 1024, module["width"], 64)
+    module["height"] = process_integer_value(256, 1024, module["height"], 64)
 def_cfg["global"]["out_amount"] = process_integer_value(1, 10, def_cfg["global"]["out_amount"])
 def_cfg["txt2img"]["upscale"]["scale"] = process_integer_value(2, 4, def_cfg["txt2img"]["upscale"]["scale"])
 def_cfg["img2img"]["upscale"]["scale"] = process_integer_value(2, 4, def_cfg["img2img"]["upscale"]["scale"])
@@ -139,8 +139,8 @@ for set_type in settings_types:
 # Integers values optimization
 width_height_modules = [settings_json["txt2img"], settings_json["img2img"]]
 for module in width_height_modules:
-    module["width"] = process_integer_value(256, 1024, module["width"], 8)
-    module["height"] = process_integer_value(256, 1024, module["height"], 8)
+    module["width"] = process_integer_value(256, 1024, module["width"], 64)
+    module["height"] = process_integer_value(256, 1024, module["height"], 64)
 settings_json["txt2img"]["upscale"]["scale"] = process_integer_value(2, 4, settings_json["txt2img"]["upscale"]["scale"])
 settings_json["img2img"]["upscale"]["scale"] = process_integer_value(2, 4, settings_json["img2img"]["upscale"]["scale"])
 settings_json["global"]["out_amount"] = process_integer_value(1, 10, settings_json["global"]["out_amount"])
