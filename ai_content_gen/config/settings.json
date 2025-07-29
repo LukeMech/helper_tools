@@ -40,6 +40,7 @@
         "active": true, 
         "prompt": "{txt2txt.out}",
         "image": "{txt2img.out}",
+        "strength": 50,
         "height": 576, 
         "width": 1024, 
         "upscale": {
