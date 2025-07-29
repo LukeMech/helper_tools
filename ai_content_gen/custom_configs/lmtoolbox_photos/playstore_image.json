@@ -53,7 +53,7 @@
     },
     "img2vid": {
         "active": false, 
-        "image": "{txt2img.out}",
+        "image": "",
         "video": {
             "enable": false,
             "music": false
@@ -63,7 +63,7 @@
             "speed": 0
         },
         "matrix": {
-            "models": "{img2vid.models}"
+            "models": []
         }
     }
 }
