@@ -38,7 +38,7 @@
         }
     },
     "img2img": {
-        "active": false, 
+        "active": true, 
         "prompt": "Toolbox ruler compass background logo",
         "image": "https://toolbox.lukemech.org/static/images/ic_launcher-playstore.png",
         "width": 1024, 
