@@ -1,0 +1,69 @@
+{
+    "global": {
+        "clean_artifacts": true,
+        "out_amount": 10
+    },
+
+    "txt2txt": {
+        "active": false, 
+        "prompt": ""
+    },
+    "txt2img": {
+        "active": false, 
+        "prompt": "",
+        "height": 0, 
+        "width": 0,
+        "upscale": {
+            "NOTE": "UPSCALER DOES NOT WORK FOR NOW",
+            "enable": false,
+            "scale": 0
+        },
+        "matrix": {
+            "models": []
+        }
+    },
+    "txt2vid": {
+        "active": false, 
+        "prompt": "",
+        "video": {
+            "enable": false,
+            "music": false
+        },
+        "gif": {
+            "enable": false,
+            "speed": 0
+        },
+        "matrix": {
+            "models": []
+        }
+    },
+    "img2img": {
+        "active": false, 
+        "prompt": "Toolbox ruler compass background logo",
+        "image": "https://toolbox.lukemech.org/static/images/ic_launcher-playstore.png",
+        "width": 1024, 
+        "height": 500, 
+        "upscale": {
+            "enable": false,
+            "scale": 0
+        },
+        "matrix": {
+            "models": "{img2img.models}"
+        }
+    },
+    "img2vid": {
+        "active": false, 
+        "image": "{txt2img.out}",
+        "video": {
+            "enable": false,
+            "music": false
+        },
+        "gif": {
+            "enable": false,
+            "speed": 0
+        },
+        "matrix": {
+            "models": "{img2vid.models}"
+        }
+    }
+}
